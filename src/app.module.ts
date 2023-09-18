@@ -6,7 +6,8 @@ import { ConfigModule } from '@nestjs/config';
 import { CategoriesModule } from './modules/categories/categories.module';
 import { GatewayModule } from './gateway/gateway.module';
 import { ProductsModule } from './modules/products/products.module';
-
+import { UsersModule } from './modules/users/users.module';
+import { AuthenModule } from './modules/authen/authen.module';
 @Module({
   imports: [
     ConfigModule.forRoot(), // load env toàn hệ thống
@@ -22,7 +23,8 @@ import { ProductsModule } from './modules/products/products.module';
     }),
     CategoriesModule,
     GatewayModule,
-    ProductsModule
+    ProductsModule, 
+    UsersModule, AuthenModule
   ],
   controllers: [AppController],
   providers: [AppService],
