@@ -3,7 +3,7 @@ import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Category } from './entities/category.entity';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 
 @Injectable()
 export class CategoriesService {
@@ -43,5 +43,21 @@ export class CategoriesService {
 
   remove(id: number) {
     return `This action removes a #${id} category`;
+  }
+
+  async searchByTitle(searchString: string) {
+    try {
+      let categories = await this.categories.find({
+        where: {
+          title: ILike(`%${searchString}%`),
+        }
+      });
+      return {
+        data: categories,
+        message: "Search ok!s"
+      }
+    }catch{
+      throw new HttpException('Lỗi model', HttpStatus.BAD_REQUEST)
+    }
   }
 }

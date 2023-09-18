@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException, HttpStatus, Res } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException, HttpStatus, Res, Query } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
@@ -17,8 +17,11 @@ export class CategoriesController {
   }
 
   @Get()
-  async findAll(@Res() res: Response) {
+  async findAll(@Res() res: Response, @Query('q') q: string) {
     try {
+      if(q != undefined) {
+        return res.status(HttpStatus.OK).json(await this.categoriesService.searchByTitle(q))
+      }
       return res.status(HttpStatus.OK).json(await this.categoriesService.findAll())
     }catch(err) {
       throw new HttpException('Lỗi controller', HttpStatus.BAD_REQUEST)
