@@ -12,6 +12,11 @@ export class Category {
     title: string;
 
     @Column({
+        default: "https://static.thenounproject.com/png/547804-200.png"
+    })
+    avatar: string;
+    
+    @Column({
         default: false
     })
     status: boolean;
