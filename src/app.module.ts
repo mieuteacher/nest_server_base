@@ -4,6 +4,8 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { CategoriesModule } from './modules/categories/categories.module';
+import { GatewayModule } from './gateway/gateway.module';
+import { ProductsModule } from './modules/products/products.module';
 
 @Module({
   imports: [
@@ -18,7 +20,9 @@ import { CategoriesModule } from './modules/categories/categories.module';
       entities: ["dist/**/*.entity{.ts,.js}"],
       synchronize: true, // dev
     }),
-    CategoriesModule
+    CategoriesModule,
+    GatewayModule,
+    ProductsModule
   ],
   controllers: [AppController],
   providers: [AppService],
