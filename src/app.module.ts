@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+import { CategoriesModule } from './modules/categories/categories.module';
 
 @Module({
   imports: [
@@ -13,10 +14,11 @@ import { ConfigModule } from '@nestjs/config';
       username: 'root',
       password: '',
       database: 'server_db',
-      entities: [],
+      entities: ["dist/**/*.entity{.ts,.js}"],
       synchronize: true, // dev
     }),
-    ConfigModule.forRoot()
+    ConfigModule.forRoot(),
+    CategoriesModule
   ],
   controllers: [AppController],
   providers: [AppService],
