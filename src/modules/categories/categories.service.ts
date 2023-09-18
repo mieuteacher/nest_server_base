@@ -7,13 +7,15 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class CategoriesService {
+
   constructor(@InjectRepository(Category) private categories: Repository<Category>){}
+
   async create(createCategoryDto: CreateCategoryDto) {
     try {
       let category = await this.categories.save(createCategoryDto);
       return {
         data: category,
-        message: "Create ok!"
+        message: "Create ok! nhé"
       }
     }catch{
       throw new HttpException('Lỗi model', HttpStatus.BAD_REQUEST)

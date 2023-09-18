@@ -10,9 +10,7 @@ export class CategoriesController {
   @Post()
   async create(@Body() createCategoryDto: CreateCategoryDto, @Res() res: Response) {
     try {
-      let serviceRes = await this.categoriesService.create(createCategoryDto);
-      res.statusMessage = serviceRes.message;
-      return res.status(200).json(serviceRes.data)
+      return res.status(HttpStatus.OK).json(await this.categoriesService.create(createCategoryDto))
     }catch(err) {
       throw new HttpException('Lỗi controller', HttpStatus.BAD_REQUEST)
     }
