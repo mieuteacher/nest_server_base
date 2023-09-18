@@ -1,27 +1,27 @@
-import { OnModuleDestroy, OnModuleInit } from "@nestjs/common";
 import { MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
 import {Server} from 'socket.io'
-@WebSocketGateway({
+import { OnModuleInit } from '@nestjs/common';
+
+@WebSocketGateway(3001,{
     cors: true
 })
-export class MyGateway implements OnModuleInit{
-
+export class BoxchatGateWay implements OnModuleInit {
     @WebSocketServer()
-    server: Server;
-
+    server: Server
+    
     onModuleInit() {
         this.server.on('connection', (socket) => {
-            console.log("socketid", socket.id)
-            console.log("connected")
+            console.log("socketid của user vừa login", socket.id)
+
             socket.on('disconnect', () => {
-                this.server.emit("log", `Bye Bye ${socket.id}`)
-                console.log(`User disconnected: ${socket.id}`);
+                this.server.emit("loadMessage", `Tam biệt user có socketid là: ${socket.id}`)
             });
         })
     }
+
     @SubscribeMessage('newMessage')
     onNewMessage(@MessageBody() body: any) {
         console.log("body", body)
-        this.server.emit('onMessage', body)
+        this.server.emit("loadMessage", body)
     }
 }
