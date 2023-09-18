@@ -17,8 +17,12 @@ export class CategoriesController {
   }
 
   @Get()
-  findAll() {
-    return this.categoriesService.findAll();
+  async findAll(@Res() res: Response) {
+    try {
+      return res.status(HttpStatus.OK).json(await this.categoriesService.findAll())
+    }catch(err) {
+      throw new HttpException('Lỗi controller', HttpStatus.BAD_REQUEST)
+    }
   }
 
   @Get(':id')

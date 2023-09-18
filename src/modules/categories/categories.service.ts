@@ -21,8 +21,16 @@ export class CategoriesService {
       throw new HttpException('Lỗi model', HttpStatus.BAD_REQUEST)
     }
   }
-  findAll() {
-    return `This action returns all categories`;
+  async findAll() {
+    try {
+      let categories = await this.categories.find();
+      return {
+        data: categories,
+        message: "Get all ok!"
+      }
+    }catch{
+      throw new HttpException('Lỗi model', HttpStatus.BAD_REQUEST)
+    }
   }
 
   findOne(id: number) {
